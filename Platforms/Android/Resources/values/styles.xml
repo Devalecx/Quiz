@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+
+	<!-- TEMA 1: Splash Screen Nativo -->
+	<style name="Maui.SplashTheme" parent="Theme.SplashScreen">
+		<item name="windowSplashScreenBackground">@color/maui_splash_color</item>
+		<item name="windowSplashScreenAnimatedIcon">@drawable/maui_splash_image</item>
+		<item name="windowSplashScreenAnimationDuration">200</item>
+		<item name="android:windowIsTranslucent">true</item>
+		
+		<!-- AGREGADO: Fondo base también aquí para cubrir la transición -->
+		<item name="android:windowBackground">#704193</item>
+	</style>
+
+	<!-- TEMA 2: Tema Principal de la App -->
+	<style name="Maui.MainTheme.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+		<item name="android:windowActionBar">false</item>
+		<item name="android:windowNoTitle">true</item>
+
+		<!-- Color de la barra de estado -->
+		<item name="android:statusBarColor">#704193</item>
+
+		<!-- CRÍTICO: Fondo de la ventana -->
+		<item name="android:windowBackground">#704193</item>
+		
+		<!-- EXTRA: Fondo por defecto de las vistas -->
+		<item name="android:colorBackground">#704193</item>
+
+	</style>
+
+</resources>

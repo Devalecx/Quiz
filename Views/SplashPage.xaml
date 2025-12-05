@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SoftwareEngineeringQuizApp.Views.SplashPage"
+             BackgroundColor="#704193"
+             Shell.NavBarIsVisible="False">
+
+    <Grid>
+        <VerticalStackLayout VerticalOptions="Center" 
+                             HorizontalOptions="Center" 
+                             Spacing="50">
+
+            <!-- CAMBIO AQUÍ: Source="splash.png" -->
+            <!-- Gracias al .csproj, MAUI generó este PNG desde la carpeta Resources/Splash -->
+            <Image x:Name="LogoImage"
+                   Source="splash.png" 
+                   WidthRequest="150"
+                   HeightRequest="150"
+                   HorizontalOptions="Center" />
+
+            <ActivityIndicator IsRunning="True" 
+                               Color="#00E676" 
+                               WidthRequest="50" 
+                               HeightRequest="50" />
+
+            <Label Text="Iniciando..." 
+                   TextColor="White" 
+                   Opacity="0.8" 
+                   FontSize="14" 
+                   HorizontalOptions="Center"/>
+        </VerticalStackLayout>
+
+
+    </Grid>
+</ContentPage>

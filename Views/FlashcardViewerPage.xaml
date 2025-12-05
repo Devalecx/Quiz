@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SoftwareEngineeringQuizApp.ViewModels"
+             x:Class="SoftwareEngineeringQuizApp.Views.FlashcardViewerPage"
+             Title="{Binding TemaActual}"
+             BackgroundColor="#704193"
+             Shell.NavBarIsVisible="False">
+
+    <Grid>
+        <Grid RowDefinitions="Auto, *, Auto" Padding="20" Margin="0,50,0,0">
+
+            <VerticalStackLayout Grid.Row="0" 
+                                 Spacing="0" 
+                                 HorizontalOptions="Center"
+                                 Margin="0,0,0,10">
+                <Label Text="TEMA ACTUAL" 
+                       TextColor="#D1C4E9" 
+                       FontSize="10" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center" 
+                       CharacterSpacing="2"/>
+
+                <Label Text="{Binding TemaActual}" 
+                       TextColor="White" 
+                       FontSize="28" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Row="1" 
+                                 Spacing="10" 
+                                 VerticalOptions="Center">
+
+                <Label Text="{Binding TextoProgreso}" 
+                       HorizontalOptions="Center" 
+                       FontSize="18" 
+                       FontAttributes="Bold" 
+                       TextColor="Yellow"/>
+
+                <Frame x:Name="TarjetaFrame" 
+                       BackgroundColor="White" 
+                       CornerRadius="20" 
+                       HasShadow="True" 
+                       BorderColor="#9400D3" 
+                       HeightRequest="450" 
+                       WidthRequest="320"
+                       HorizontalOptions="Center"
+                       Padding="0">
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnVoltearClicked"/>
+                    </Frame.GestureRecognizers>
+
+                    <Grid Padding="20">
+                        <Label Text="{Binding TextoIndicador}" 
+                               TextColor="LightGray" 
+                               FontSize="10" 
+                               HorizontalOptions="Center" 
+                               VerticalOptions="Start"/>
+
+                        <Label Text="{Binding TextoMostrar}"
+                               FontSize="24"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               HorizontalTextAlignment="Center"
+                               TextColor="#333"/>
+
+                        <Label Text="Toca para voltear" 
+                               VerticalOptions="End" 
+                               HorizontalOptions="Center" 
+                               TextColor="#00BCD4" 
+                               FontSize="12"/>
+                    </Grid>
+                </Frame>
+            </VerticalStackLayout>
+
+            <Grid Grid.Row="2" ColumnDefinitions="Auto, *, Auto" Margin="0,20,0,30" WidthRequest="320" HorizontalOptions="Center">
+                <Button Grid.Column="0" Text="Anterior" Command="{Binding AnteriorCommand}" IsEnabled="{Binding PuedeRetroceder}" BackgroundColor="#17C3B2" TextColor="White" WidthRequest="100"/>
+                <Button Grid.Column="1" Text="Voltear" Clicked="OnVoltearClicked" BackgroundColor="#00BCD4" TextColor="White" WidthRequest="100" HorizontalOptions="Center"/>
+                <Button Grid.Column="2" Text="Siguiente" Command="{Binding SiguienteCommand}" IsEnabled="{Binding PuedeAvanzar}" BackgroundColor="#17C3B2" TextColor="White" WidthRequest="100"/>
+            </Grid>
+        </Grid>
+
+        <Button Text="☰"
+                Command="{Binding AbrirMenuCommand}"
+                FontSize="24"
+                TextColor="White"
+                BackgroundColor="#704193"
+                BorderColor="White"
+                BorderWidth="1"
+                CornerRadius="10"
+                HeightRequest="50"
+                WidthRequest="50"
+                HorizontalOptions="End"
+                VerticalOptions="Start"
+                Margin="20,20,20,0"
+                Padding="0"
+                ZIndex="10"/>
+
+        <Grid IsVisible="{Binding MenuVisible}" 
+              ZIndex="20" 
+              BackgroundColor="#CC000000">
+
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding CerrarMenuCommand}"/>
+            </Grid.GestureRecognizers>
+
+            <Frame BackgroundColor="White"
+                   CornerRadius="20"
+                   WidthRequest="300"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   Padding="25"
+                   HasShadow="True">
+
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer />
+                </Frame.GestureRecognizers>
+
+                <VerticalStackLayout Spacing="20">
+                    <Label Text="Configuración" 
+                           TextColor="#520D60" 
+                           FontSize="22" 
+                           FontAttributes="Bold" 
+                           HorizontalOptions="Center"
+                           Margin="0,0,0,10"/>
+
+                    <BoxView HeightRequest="2" Color="#E0E0E0" HorizontalOptions="FillAndExpand"/>
+
+                    <HorizontalStackLayout Spacing="15">
+                        <Image Source="musica.png" 
+                               HeightRequest="24"
+                               WidthRequest="24"
+                               VerticalOptions="Center"/>
+
+                        <Label Text="Música de Fondo" VerticalOptions="Center" FontSize="16" TextColor="#333" HorizontalOptions="StartAndExpand"/>
+                        <Switch IsToggled="{Binding IsMusicEnabled}" OnColor="#17C3B2" ThumbColor="White" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="15">
+                        <Image Source="sonido.png" 
+                               HeightRequest="24"
+                               WidthRequest="24"
+                               VerticalOptions="Center"/>
+
+                        <Label Text="Efectos de Sonido" VerticalOptions="Center" FontSize="16" TextColor="#333" HorizontalOptions="StartAndExpand"/>
+                        <Switch IsToggled="{Binding IsSoundEffectsEnabled}" OnColor="#17C3B2" ThumbColor="White" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <BoxView HeightRequest="2" Color="#E0E0E0" HorizontalOptions="FillAndExpand" Margin="0,10"/>
+
+                    <Button Text="Salir al Menú Principal" 
+                            Command="{Binding SalirAlMenuCommand}"
+                            BackgroundColor="#F44336"
+                            TextColor="White"
+                            CornerRadius="12"
+                            HeightRequest="50"
+                            FontSize="15"
+                            FontAttributes="Bold"/>
+
+                    <Button Text="Cancelar" 
+                            Command="{Binding CerrarMenuCommand}"
+                            BackgroundColor="#E0E0E0"
+                            TextColor="#333"
+                            CornerRadius="12"
+                            HeightRequest="50"
+                            FontSize="15"
+                            FontAttributes="Bold"/>
+                </VerticalStackLayout>
+            </Frame>
+        </Grid>
+    </Grid>
+</ContentPage>

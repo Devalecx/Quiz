@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SoftwareEngineeringQuizApp.ViewModels"
+             x:Class="SoftwareEngineeringQuizApp.Views.MenuPrincipalPage"
+             Title="Menú Principal"
+             BackgroundColor="#704193"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.BindingContext>
+        <vm:MenuPrincipalViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="*, Auto" Padding="30">
+
+        <!-- Contenedor Central: Logo + Botones -->
+        <VerticalStackLayout Grid.Row="0" 
+                             Spacing="40" 
+                             VerticalOptions="Center">
+
+            <!-- IMAGEN PRINCIPAL (LOGO) - Tamaño aumentado para equilibrar -->
+            <Image Source="principal.png"
+                   WidthRequest="280"
+                   HeightRequest="280"
+                   Aspect="AspectFit"
+                   Margin="0,0,0,10"/>
+
+            <!-- BOTONES GRANDES (Estilo Referencia) -->
+            <VerticalStackLayout Spacing="25">
+
+                <!-- Botón Quiz (Verde) -->
+                <Button Text="Iniciar Quiz"
+                        Command="{Binding IrAQuizCommand}"
+                        BackgroundColor="#00C853"
+                        TextColor="White"
+                        HeightRequest="90"
+                        CornerRadius="15"
+                        FontSize="22"
+                        FontAttributes="Bold"
+                        Shadow="{Shadow Brush=Black, Offset='0,4', Opacity=0.3}"/>
+
+                <!-- Botón Flashcards (Rojo Coral) -->
+                <Button Text="Estudiar Flashcards"
+                        Command="{Binding IrAFlashcardsCommand}"
+                        BackgroundColor="#FF5252"
+                        TextColor="White"
+                        HeightRequest="90"
+                        CornerRadius="15"
+                        FontSize="22"
+                        FontAttributes="Bold"
+                        Shadow="{Shadow Brush=Black, Offset='0,4', Opacity=0.3}"/>
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+
+    </Grid>
+</ContentPage>

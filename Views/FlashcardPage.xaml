@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SoftwareEngineeringQuizApp.Views.FlashcardPage"
+             xmlns:vm="clr-namespace:SoftwareEngineeringQuizApp.ViewModels"
+             x:DataType="vm:FlashcardViewModel"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#4B0082">
+
+    <Grid RowDefinitions="Auto, *, Auto" Padding="20">
+
+        <Label Grid.Row="0"
+               Text="{Binding ProgressText}"
+               TextColor="White"
+               HorizontalOptions="Center"
+               FontSize="16"
+               Margin="0,20"/>
+
+        <Frame Grid.Row="1" VerticalOptions="Center" Padding="20"
+               BackgroundColor="White" CornerRadius="15" HasShadow="True">
+
+            <Label x:Name="CardLabel" FontSize="24" TextColor="Black"
+                   VerticalOptions="Center" HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Text="{Binding CardFrontText}">
+
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding IsFlipped}" Value="True">
+                        <Setter Property="Text" Value="{Binding CardBackText}" />
+                        <Setter Property="FontAttributes" Value="Italic" />
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+
+        </Frame>
+
+        <Grid Grid.Row="2" ColumnDefinitions="*,*,*" ColumnSpacing="10" Margin="0,20">
+            <Button Grid.Column="0" Text="Anterior" Command="{Binding PreviousCardCommand}"/>
+            <Button Grid.Column="1" Text="Voltear" Command="{Binding FlipCardCommand}" FontAttributes="Bold"/>
+            <Button Grid.Column="2" Text="Siguiente" Command="{Binding NextCardCommand}"/>
+        </Grid>
+
+    </Grid>
+</ContentPage>
