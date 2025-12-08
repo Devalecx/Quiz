@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using SoftwareEngineeringQuizApp.Models; // Necesario para usar TemaUI
+using SoftwareEngineeringQuizApp.Models;
 using SoftwareEngineeringQuizApp.Services;
 
 namespace SoftwareEngineeringQuizApp.ViewModels;
@@ -10,7 +10,6 @@ public partial class ListaTemasFlashcardsViewModel : ObservableObject
 {
     private readonly RepositorioBaseDatos _repositorio;
 
-    // Usamos una colección de TemaUI en lugar de strings simples
     [ObservableProperty]
     private ObservableCollection<TemaUI> temasUI;
 
@@ -47,19 +46,18 @@ public partial class ListaTemasFlashcardsViewModel : ObservableObject
         }
     }
 
-    // Método para mapear el nombre del tema al nombre del archivo de imagen
-    // Asegúrate de que estos nombres coincidan con tus archivos en Resources/Images
+    // ✅ CORREGIDO: Nombres SIN caracteres especiales (paréntesis ni tildes)
     private string ObtenerIconoParaTema(string nombreTema)
     {
         return nombreTema switch
         {
-            "C# .NET" => "basededatos.png",
+            "SQL" => "basededatos.png",
             "Arquitectura" => "agil.png",
-            "Patrones" => "poo.png",
-            "Testing" => "git.png",
-            "Web" => "ciberseguridad.png",
-            "DevOps" => "html.png",
-            _ => "icono_default.png" // Imagen por defecto si no encuentra coincidencia
+            "POO" => "poo.png",
+            "Git" => "git.png",
+            "Ciberseguridad" => "ciberseguridad.png",
+            "HTML5" => "html.png",
+            _ => "icono_default.png"
         };
     }
 
@@ -67,8 +65,6 @@ public partial class ListaTemasFlashcardsViewModel : ObservableObject
     public async Task SeleccionarTemaAsync(string tema)
     {
         if (string.IsNullOrWhiteSpace(tema)) return;
-
-        // Navegamos pasando el nombre del tema
         await Shell.Current.GoToAsync($"FlashcardViewer?tema={tema}");
     }
 }

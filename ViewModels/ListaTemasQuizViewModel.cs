@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using SoftwareEngineeringQuizApp.Models; // Importante para TemaUI
+using SoftwareEngineeringQuizApp.Models;
 using SoftwareEngineeringQuizApp.Services;
 
 namespace SoftwareEngineeringQuizApp.ViewModels;
@@ -10,7 +10,6 @@ public partial class ListaTemasQuizViewModel : ObservableObject
 {
     private readonly RepositorioBaseDatos _repositorio;
 
-    // CAMBIO: Usamos ObservableCollection<TemaUI> en vez de string
     [ObservableProperty]
     private ObservableCollection<TemaUI> temasUI;
 
@@ -47,17 +46,17 @@ public partial class ListaTemasQuizViewModel : ObservableObject
         }
     }
 
-    // Mapeo de imagen por tema
+    // ✅ CORREGIDO: Nombres SIN caracteres especiales (paréntesis ni tildes)
     private string ObtenerIconoParaTema(string nombreTema)
     {
         return nombreTema switch
         {
-            "C# .NET" => "basededatos.png",
+            "SQL" => "basededatos.png",
             "Arquitectura" => "agil.png",
-            "Patrones" => "poo.png",
-            "Testing" => "git.png",
-            "Web" => "ciberseguridad.png",
-            "DevOps" => "html.png",
+            "POO" => "poo.png",
+            "Git" => "git.png",
+            "Ciberseguridad" => "ciberseguridad.png",
+            "HTML5" => "html.png",
             _ => "icono_default.png"
         };
     }
@@ -66,7 +65,6 @@ public partial class ListaTemasQuizViewModel : ObservableObject
     public async Task SeleccionarTemaAsync(string tema)
     {
         if (string.IsNullOrWhiteSpace(tema)) return;
-        // Navegamos a la pantalla de Preguntas
         await Shell.Current.GoToAsync($"PreguntaQuiz?tema={tema}");
     }
 }
