@@ -8,20 +8,16 @@ public partial class AppShell : Shell
     {
         InitializeComponent();
 
-        // ---------------------------------------------------------
-        // REGISTRO DE RUTAS DE NAVEGACIÓN
-        // ---------------------------------------------------------
-        // Aquí conectamos el "Nombre de la ruta" (string) con la "Página real" (Type).
-
-        // FASE 3: Rutas del Quiz
-        // Cuando el ViewModel llame a "ListaTemasQuiz", abrirá ListaTemasQuizPage
+        // Rutas del Quiz
         Routing.RegisterRoute("ListaTemasQuiz", typeof(ListaTemasQuizPage));
         Routing.RegisterRoute("PreguntaQuiz", typeof(PreguntaQuizPage));
         Routing.RegisterRoute("ResultadoQuiz", typeof(ResultadoQuizPage));
 
-        // FASE 4: Rutas de Flashcards
-        // Cuando el ViewModel llame a "ListaTemasFlashcards", abrirá ListaTemasFlashcardsPage
+        // Rutas de Flashcards
         Routing.RegisterRoute("ListaTemasFlashcards", typeof(ListaTemasFlashcardsPage));
         Routing.RegisterRoute("FlashcardViewer", typeof(FlashcardViewerPage));
+
+        // ✅ NUEVA RUTA: Perfil (ya no está en tabs, así que la registramos aquí)
+        Routing.RegisterRoute("Perfil", typeof(PerfilPage));
     }
 }

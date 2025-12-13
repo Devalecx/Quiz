@@ -45,6 +45,12 @@ public static class MauiProgram
         builder.Services.AddTransient<FlashcardViewerPage>();
         builder.Services.AddTransient<SplashPage>();
 
+        // ... dentro de CreateMauiApp
+        // ViewModels
+        builder.Services.AddTransient<PerfilViewModel>();
+        // Views
+        builder.Services.AddTransient<PerfilPage>();
+
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

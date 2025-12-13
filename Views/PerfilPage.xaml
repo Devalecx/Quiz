@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SoftwareEngineeringQuizApp.ViewModels"
+             x:Class="SoftwareEngineeringQuizApp.Views.PerfilPage"
+             Title="Mi Perfil"
+             BackgroundColor="#F5F5F5">
+
+    <Grid RowDefinitions="Auto, *">
+
+        <Frame Grid.Row="0" 
+               BackgroundColor="#704193" 
+               CornerRadius="0" 
+               HasShadow="False"
+               Padding="20,40,20,50">
+
+            <VerticalStackLayout Spacing="20" HorizontalOptions="Center">
+
+                <VerticalStackLayout Spacing="8">
+                    <Border Stroke="White"
+                            StrokeThickness="3"
+                            StrokeShape="RoundRectangle 60"
+                            HeightRequest="120"
+                            WidthRequest="120"
+                            HorizontalOptions="Center"
+                            BackgroundColor="#E1BEE7">
+
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Offset="0,4" Opacity="0.2" Radius="5"/>
+                        </Border.Shadow>
+
+                        <Grid>
+                            <Grid.Clip>
+                                <EllipseGeometry Center="60,60" RadiusX="60" RadiusY="60" />
+                            </Grid.Clip>
+
+                            <Image Source="jugador.png" Aspect="AspectFill" BackgroundColor="#E1BEE7"/>
+                            <Image Source="{Binding FotoPerfil}" Aspect="AspectFill"/>
+                            <Button BackgroundColor="Transparent" Command="{Binding CambiarFotoCommand}"/>
+                        </Grid>
+                    </Border>
+
+                    <Label Text="Toca para cambiar foto" 
+                           TextColor="#D1C4E9" 
+                           FontSize="11" 
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="5" Margin="0,10,0,0">
+                    <Label Text="NOMBRE DE USUARIO"
+                           TextColor="#D1C4E9"
+                           FontSize="10"
+                           FontAttributes="Bold"
+                           CharacterSpacing="2"
+                           HorizontalOptions="Center"/>
+
+                    <Frame BackgroundColor="#20FFFFFF"
+                           BorderColor="White"
+                           CornerRadius="25"
+                           Padding="15,0" 
+                           HeightRequest="50"
+                           WidthRequest="300"
+                           HasShadow="False"
+                           HorizontalOptions="Center">
+
+                        <Grid>
+                            <Entry Text="{Binding NombreUsuario}" 
+                                   TextColor="#FFD700" 
+                                   Placeholder="Escribe tu nombre"
+                                   PlaceholderColor="#B39DDB"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Fill"
+                                   HorizontalTextAlignment="Center"/>
+
+                            <ImageButton Source="varita.png" 
+                                         Command="{Binding GuardarNombreCommand}"
+                                         HeightRequest="20"
+                                         WidthRequest="20"
+                                         VerticalOptions="Center"
+                                         HorizontalOptions="End" 
+                                         Opacity="0.9"/>
+                        </Grid>
+                    </Frame>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </Frame>
+
+        <Grid Grid.Row="1" Padding="20,0,20,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label Text="Resultados Recientes" 
+                   FontSize="16" 
+                   FontAttributes="Bold" 
+                   TextColor="#616161" 
+                   Margin="5,20,0,10"/>
+
+            <CollectionView Grid.Row="1" ItemsSource="{Binding Historial}" EmptyView="">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border StrokeShape="RoundRectangle 15"
+                                StrokeThickness="0"
+                                BackgroundColor="White"
+                                Padding="0"
+                                Margin="0,2">
+                            <Border.Shadow>
+                                <Shadow Brush="#BDBDBD" Offset="0,2" Opacity="0.3" Radius="3"/>
+                            </Border.Shadow>
+
+                            <Grid ColumnDefinitions="6, *, Auto">
+
+                                <BoxView Grid.Column="0" Color="#704193"/>
+
+                                <VerticalStackLayout Grid.Column="1" 
+                                                     Padding="15,12" 
+                                                     Spacing="4" 
+                                                     VerticalOptions="Center">
+
+                                    <Label Text="{Binding Tema}" 
+                                           FontSize="16" 
+                                           FontAttributes="Bold" 
+                                           TextColor="#333"/>
+
+                                    <HorizontalStackLayout Spacing="5">
+                                        <Label FontSize="10" VerticalOptions="Center" Opacity="0.6"/>
+                                        <Label Text="{Binding Fecha, StringFormat='{0:dd MMM • HH:mm}'}" 
+                                               FontSize="12" 
+                                               TextColor="#757575"/>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+
+                                <Border Grid.Column="2" 
+                                        StrokeShape="RoundRectangle 20"
+                                        BackgroundColor="#F3E5F5" 
+                                        StrokeThickness="0"
+                                        Padding="15,8"
+                                        Margin="15"
+                                        VerticalOptions="Center">
+
+                                    <HorizontalStackLayout Spacing="2" VerticalOptions="Center">
+                                        <Label Text="{Binding Aciertos}" 
+                                               FontAttributes="Bold" 
+                                               FontSize="18" 
+                                               TextColor="#704193"/>
+
+                                        <Label Text="/" 
+                                               FontSize="12" 
+                                               TextColor="#9575CD" 
+                                               VerticalOptions="End" 
+                                               Margin="0,0,0,3"/>
+
+                                        <Label Text="{Binding TotalPreguntas}" 
+                                               FontSize="12" 
+                                               TextColor="#9575CD" 
+                                               VerticalOptions="End" 
+                                               Margin="0,0,0,3"/>
+                                    </HorizontalStackLayout>
+                                </Border>
+
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </Grid>
+</ContentPage>

@@ -1,10 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using SoftwareEngineeringQuizApp.Models;
+using SoftwareEngineeringQuizApp.Services;
 
 namespace SoftwareEngineeringQuizApp.ViewModels;
 
 public partial class ResultadoQuizViewModel : ObservableObject, IQueryAttributable
 {
+    private readonly RepositorioBaseDatos _repositorio;
+
     [ObservableProperty]
     private int aciertos;
 
@@ -15,14 +19,28 @@ public partial class ResultadoQuizViewModel : ObservableObject, IQueryAttributab
     private string mensajeResultado;
 
     [ObservableProperty]
-    private string colorResultado; // Hex color para UI
+    private string colorResultado;
 
-    // ✅ NUEVA: Propiedad para guardar el tema del quiz
     [ObservableProperty]
     private string temaActual = string.Empty;
 
-    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    // ✅ NUEVO: Propiedad para el nombre
+    [ObservableProperty]
+    private string nombreUsuario = string.Empty;
+
+    public ResultadoQuizViewModel(RepositorioBaseDatos repositorio)
     {
+        _repositorio = repositorio;
+    }
+
+    public async void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        // 1. CARGAR NOMBRE DEL USUARIO
+        // Lo hacemos al inicio para que aparezca rápido
+        var usuario = await _repositorio.ObtenerUsuarioAsync();
+        NombreUsuario = usuario.Nombre;
+
+        // 2. PROCESAR RESULTADOS
         if (query.ContainsKey("aciertos") && query.ContainsKey("total"))
         {
             Aciertos = int.Parse(query["aciertos"].ToString());
@@ -30,30 +48,44 @@ public partial class ResultadoQuizViewModel : ObservableObject, IQueryAttributab
             CalcularResultado();
         }
 
-        // ✅ NUEVO: Guardamos el tema para poder repetir el quiz
+        // 3. GUARDAR HISTORIAL
         if (query.ContainsKey("tema"))
         {
             TemaActual = query["tema"].ToString();
+
+            var nuevoIntento = new HistorialQuiz
+            {
+                Tema = TemaActual,
+                Aciertos = Aciertos,
+                TotalPreguntas = TotalPreguntas,
+                Fecha = DateTime.Now
+            };
+
+            await _repositorio.GuardarHistorialAsync(nuevoIntento);
         }
     }
 
     private void CalcularResultado()
     {
-        double porcentaje = (double)Aciertos / TotalPreguntas;
+        double porcentaje = 0;
+        if (TotalPreguntas > 0)
+        {
+            porcentaje = (double)Aciertos / TotalPreguntas;
+        }
 
         if (porcentaje >= 0.8)
         {
-            MensajeResultado = "¡Excelente Trabajo!";
+            MensajeResultado = "¡EXCELENTE TRABAJO!";
             ColorResultado = "#FFD700"; // Oro
         }
         else if (porcentaje >= 0.5)
         {
-            MensajeResultado = "¡Buen Intento!";
-            ColorResultado = "#F9A825"; // Amarillo/Naranja
+            MensajeResultado = "¡BUEN INTENTO!";
+            ColorResultado = "#F9A825"; // Naranja
         }
         else
         {
-            MensajeResultado = "Sigue Estudiando";
+            MensajeResultado = "SIGUE ESTUDIANDO";
             ColorResultado = "#FFFF00"; // Amarillo
         }
     }
@@ -61,32 +93,18 @@ public partial class ResultadoQuizViewModel : ObservableObject, IQueryAttributab
     [RelayCommand]
     public async Task VolverAlMenuAsync()
     {
-        // Navegar a la raíz absoluta (resetea la pila de navegación)
         await Shell.Current.GoToAsync("//MenuPrincipal");
     }
 
-    // ✅ NUEVO: Comando para repetir el quiz del mismo tema
     [RelayCommand]
     public async Task RepetirQuizAsync()
     {
         if (string.IsNullOrWhiteSpace(TemaActual))
         {
-            // Si no hay tema guardado, volver al menú
             await Shell.Current.GoToAsync("//MenuPrincipal");
             return;
         }
-
-        // Navegar de vuelta a PreguntaQuiz con el mismo tema
-        // Usamos ".." dos veces para salir de ResultadoQuiz y PreguntaQuiz anterior
         await Shell.Current.GoToAsync($"../..");
-
-        // Luego navegamos de nuevo a PreguntaQuiz con el mismo tema
         await Shell.Current.GoToAsync($"PreguntaQuiz?tema={TemaActual}");
     }
 }
-
-
-
-
-
-

@@ -6,90 +6,59 @@
              BackgroundColor="#704193"
              Shell.NavBarIsVisible="False">
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="30" VerticalOptions="Center">
+        <VerticalStackLayout Padding="20" Spacing="20" VerticalOptions="Center">
+            <Image Source="diana.png"
+                   WidthRequest="120"
+                   HeightRequest="120"
+                   HorizontalOptions="Center"/>
 
-            <Image 
-                Source="diana.png"
-                WidthRequest="120"
-                HeightRequest="120"
-                HorizontalOptions="Center"/>
+            <Label Text="{Binding NombreUsuario, StringFormat='{0},'}"
+                   TextColor="#FFD700" 
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   Margin="0,-10,0,-10"/>
+            <Label Text="{Binding MensajeResultado}"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   TextColor="{Binding ColorResultado}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center">
+                <Label.Shadow>
+                    <Shadow Brush="Black" Offset="2,2" Opacity="0.3"/>
+                </Label.Shadow>
+            </Label>
 
-            <Label 
-                Text="{Binding MensajeResultado}"
-                FontSize="28"
-                FontAttributes="Bold"
-                TextColor="{Binding ColorResultado}"
-                HorizontalOptions="Center"
-                HorizontalTextAlignment="Center"/>
-
-            <Frame 
-                BackgroundColor="White"
-                CornerRadius="15"
-                HasShadow="True"
-                Padding="30"
-                Margin="0,10">
+            <Frame BackgroundColor="White"
+                   CornerRadius="15"
+                   HasShadow="True"
+                   Padding="30"
+                   Margin="0,10">
 
                 <VerticalStackLayout Spacing="15">
-                    <Label 
-                        Text="Tus Resultados:"
-                        FontSize="20"
-                        FontAttributes="Bold"
-                        TextColor="#333333"
-                        HorizontalOptions="Center"/>
+                    <Label Text="Tus Resultados:"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="#333333"
+                           HorizontalOptions="Center"/>
 
-                    <BoxView 
-                        HeightRequest="1" 
-                        Color="#E0E0E0" 
-                        HorizontalOptions="FillAndExpand"/>
+                    <BoxView HeightRequest="1" 
+                             Color="#E0E0E0" 
+                             HorizontalOptions="FillAndExpand"/>
 
-                    <HorizontalStackLayout 
-                        HorizontalOptions="Center" 
-                        Spacing="10">
-                        <Image 
-                            Source="correcto.png"
-                            WidthRequest="24"
-                            HeightRequest="24"
-                            VerticalOptions="Center"/>
-                        <Label 
-                            Text="Correctas:"
-                            FontSize="18"
-                            TextColor="#4CAF50"
-                            VerticalOptions="Center"/>
-                        <Label 
-                            Text="{Binding Aciertos}"
-                            FontSize="18"
-                            FontAttributes="Bold"
-                            TextColor="#4CAF50"
-                            VerticalOptions="Center"/>
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                        <Image Source="correcto.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Center"/>
+                        <Label Text="Correctas:" FontSize="18" TextColor="#4CAF50" VerticalOptions="Center"/>
+                        <Label Text="{Binding Aciertos}" FontSize="18" FontAttributes="Bold" TextColor="#4CAF50" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
 
-                    <HorizontalStackLayout 
-                        HorizontalOptions="Center" 
-                        Spacing="10">
-                        <Image 
-                            Source="total.png"
-                            WidthRequest="24"
-                            HeightRequest="24"
-                            VerticalOptions="Center"/>
-                        <Label 
-                            Text="Total:"
-                            FontSize="18"
-                            TextColor="#666666"
-                            VerticalOptions="Center"/>
-                        <Label 
-                            Text="{Binding TotalPreguntas}"
-                            FontSize="18"
-                            FontAttributes="Bold"
-                            TextColor="#666666"
-                            VerticalOptions="Center"/>
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                        <Image Source="total.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Center"/>
+                        <Label Text="Total:" FontSize="18" TextColor="#666666" VerticalOptions="Center"/>
+                        <Label Text="{Binding TotalPreguntas}" FontSize="18" FontAttributes="Bold" TextColor="#666666" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
 
-                    <Label 
-                        FontSize="24"
-                        FontAttributes="Bold"
-                        HorizontalOptions="Center"
-                        Margin="0,10,0,0"
-                        TextColor="#333333">
+                    <Label FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,10,0,0" TextColor="#333333">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="{Binding Aciertos}"/>
@@ -101,32 +70,28 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- ✅ CORREGIDO: Command cambiado a RepetirQuizCommand -->
-            <Button 
-                BackgroundColor="#00C853"
-                TextColor="White"
-                FontSize="18"
-                FontAttributes="Bold"
-                HeightRequest="60"
-                CornerRadius="30"
-                Margin="0,10,0,5"
-                Command="{Binding RepetirQuizCommand}" 
-                ImageSource="repetir.png"
-                Text="Repetir Quiz"/>
+            <Button BackgroundColor="#00C853"
+                    TextColor="White"
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    HeightRequest="60"
+                    CornerRadius="30"
+                    Margin="0,10,0,5"
+                    Command="{Binding RepetirQuizCommand}" 
+                    ImageSource="repetir.png"
+                    Text="Repetir Quiz"/>
 
-            <Button 
-                BackgroundColor="#FF5252"
-                TextColor="White"
-                FontSize="18"
-                FontAttributes="Bold"
-                HeightRequest="60"
-                CornerRadius="30"
-                Margin="0,5,0,0"
-                Command="{Binding VolverAlMenuCommand}"
-                ImageSource="home.png"
-                Text="Volver al Menú"/>
+            <Button BackgroundColor="#FF5252"
+                    TextColor="White"
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    HeightRequest="60"
+                    CornerRadius="30"
+                    Margin="0,5,0,0"
+                    Command="{Binding VolverAlMenuCommand}"
+                    ImageSource="home.png"
+                    Text="Volver al Menú"/>
 
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>

@@ -9,13 +9,10 @@
     BackgroundColor="#704193"
     Shell.ForegroundColor="White" 
     Shell.TitleColor="White">
-    <!-- ✅ ARREGLO: Definimos el color blanco DIRECTAMENTE aquí para forzarlo en todas las pantallas -->
 
     <Shell.Resources>
         <ResourceDictionary>
             <Color x:Key="Primary">#704193</Color>
-
-            <!-- Este estilo se puede quedar como referencia, pero las propiedades de arriba mandan -->
             <Style x:Key="BaseStyle" TargetType="Element">
                 <Setter Property="Shell.BackgroundColor" Value="{StaticResource Primary}" />
                 <Setter Property="Shell.ForegroundColor" Value="White" />
@@ -26,10 +23,6 @@
         </ResourceDictionary>
     </Shell.Resources>
 
-    <!-- 
-        Menú Principal: 
-        Al iniciar la app, esta será la primera pantalla visible.
-    -->
     <ShellContent
         Title="Inicio"
         ContentTemplate="{DataTemplate views:MenuPrincipalPage}"

@@ -4,16 +4,27 @@ namespace SoftwareEngineeringQuizApp.Views;
 
 public partial class MenuPrincipalPage : ContentPage
 {
+    private readonly MenuPrincipalViewModel _vm;
+
     public MenuPrincipalPage(MenuPrincipalViewModel vm)
     {
         InitializeComponent();
         BindingContext = vm;
+        _vm = vm;
     }
 
-    // --- INTERCEPTAR BOTÓN ATRÁS (Cierre de App) ---
+    // Se ejecuta al iniciar la app Y al regresar de otra pantalla
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        // Recargamos la foto y el nombre
+        await _vm.CargarDatosUsuarioAsync();
+    }
+
+    // --- Tu código existente para interceptar botón atrás ---
     protected override bool OnBackButtonPressed()
     {
-        // Ejecutamos la alerta en el hilo principal de la UI
         Dispatcher.Dispatch(async () =>
         {
             bool cerrar = await DisplayAlert(
@@ -24,13 +35,9 @@ public partial class MenuPrincipalPage : ContentPage
 
             if (cerrar)
             {
-                // Este método cierra la aplicación correctamente en Android/iOS
                 Application.Current.Quit();
             }
         });
-
-        // Retornamos TRUE para decirle al sistema:
-        // "No minimices la app automáticamente, espera a que el usuario decida en la alerta".
         return true;
     }
 }

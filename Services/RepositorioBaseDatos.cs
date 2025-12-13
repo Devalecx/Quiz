@@ -11,7 +11,7 @@ public class RepositorioBaseDatos
     public RepositorioBaseDatos()
     {
     }
-
+    // 1. MODIFICAR EL MÉTODO INIT PARA CREAR LAS NUEVAS TABLAS
     private async Task Init()
     {
         if (_database is not null)
@@ -21,6 +21,10 @@ public class RepositorioBaseDatos
 
         await _database.CreateTableAsync<PreguntaQuiz>();
         await _database.CreateTableAsync<TarjetaFlashcard>();
+
+        // --- NUEVAS TABLAS ---
+        await _database.CreateTableAsync<Usuario>();
+        await _database.CreateTableAsync<HistorialQuiz>();
 
         await SembrarDatosIniciales();
     }
@@ -1165,7 +1169,36 @@ public class RepositorioBaseDatos
     }
 
     // --- MÉTODOS PÚBLICOS ---
+    // Obtener el usuario (si no existe, crea uno por defecto)
+    public async Task<Usuario> ObtenerUsuarioAsync()
+    {
+        await Init();
+        var usuario = await _database.Table<Usuario>().FirstOrDefaultAsync();
+        if (usuario == null)
+        {
+            usuario = new Usuario();
+            await _database.InsertAsync(usuario);
+        }
+        return usuario;
+    }
+    public async Task GuardarUsuarioAsync(Usuario usuario)
+    {
+        await Init();
+        await _database.UpdateAsync(usuario);
+    }
 
+    public async Task GuardarHistorialAsync(HistorialQuiz intento)
+    {
+        await Init();
+        await _database.InsertAsync(intento);
+    }
+
+    public async Task<List<HistorialQuiz>> ObtenerHistorialAsync()
+    {
+        await Init();
+        // Ordenamos por fecha descendente (el más reciente primero)
+        return await _database.Table<HistorialQuiz>().OrderByDescending(h => h.Fecha).ToListAsync();
+    }
     public async Task<List<PreguntaQuiz>> ObtenerPreguntasPorTema(string tema)
     {
         await Init();

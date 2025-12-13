@@ -142,7 +142,7 @@ public partial class PreguntaQuizViewModel : ObservableObject, IQueryAttributabl
                 PreguntaActual = pregunta;
                 TextoProgreso = $"Pregunta {_indicePreguntaActual + 1} de {_preguntasDelQuiz.Count}";
 
-                // ✅ Resetear estado de feedback
+                // Resetear estado de feedback
                 MostrarFeedback = false;
                 BotonesHabilitados = true;
                 RespuestaSeleccionada = string.Empty;
@@ -192,7 +192,7 @@ public partial class PreguntaQuizViewModel : ObservableObject, IQueryAttributabl
 
         try
         {
-            // ✅ Deshabilitar botones inmediatamente
+            // Deshabilitar botones inmediatamente
             BotonesHabilitados = false;
             RespuestaSeleccionada = opcionSeleccionada;
 
@@ -227,12 +227,12 @@ public partial class PreguntaQuizViewModel : ObservableObject, IQueryAttributabl
                 MensajeFeedback = $"Incorrecto. La respuesta correcta es: {PreguntaActual.RespuestaCorrecta}";
             }
 
-            // ✅ RESTAURADO: Tu lógica original de explicación
+            
             ExplicacionFeedback = string.IsNullOrEmpty(PreguntaActual.Explicacion)
                 ? "No hay explicación disponible para esta pregunta."
                 : PreguntaActual.Explicacion;
 
-            // ✅ Mostrar panel de feedback
+           
             MostrarFeedback = true;
 
             System.Diagnostics.Debug.WriteLine("Feedback mostrado");
@@ -267,7 +267,7 @@ public partial class PreguntaQuizViewModel : ObservableObject, IQueryAttributabl
         {
             System.Diagnostics.Debug.WriteLine($"Finalizando quiz - Aciertos: {_aciertos}/{_preguntasDelQuiz.Count}");
 
-            // ✅ MODIFICADO: Ahora pasamos también el tema para poder repetir el quiz
+            //Ahora pasamos también el tema para poder repetir el quiz
             await Shell.Current.GoToAsync($"ResultadoQuiz?aciertos={_aciertos}&total={_preguntasDelQuiz.Count}&tema={TemaActual}");
         }
         catch (Exception ex)

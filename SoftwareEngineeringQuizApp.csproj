@@ -76,6 +76,9 @@
 		<MauiXaml Update="Views\MenuPrincipalPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Views\PerfilPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\PreguntaQuizPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>

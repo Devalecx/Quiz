@@ -7,28 +7,91 @@
              BackgroundColor="#704193"
              Shell.NavBarIsVisible="False">
 
-    <ContentPage.BindingContext>
-        <vm:MenuPrincipalViewModel />
-    </ContentPage.BindingContext>
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-    <Grid RowDefinitions="*, Auto" Padding="30">
-
-        <!-- Contenedor Central: Logo + Botones -->
         <VerticalStackLayout Grid.Row="0" 
-                             Spacing="40" 
-                             VerticalOptions="Center">
+                             HorizontalOptions="Start" 
+                             Spacing="5">
 
-            <!-- IMAGEN PRINCIPAL (LOGO) - Tamaño aumentado para equilibrar -->
+            <Border Stroke="White"
+                    StrokeThickness="2"
+                    StrokeShape="RoundRectangle 40"
+                    HeightRequest="80"
+                    WidthRequest="80"
+                    HorizontalOptions="Center"
+                    BackgroundColor="#9C27B0">
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding IrAPerfilCommand}"/>
+                </Border.GestureRecognizers>
+
+                <Border.Shadow>
+                    <Shadow Brush="Black" Offset="0,4" Opacity="0.3" Radius="3"/>
+                </Border.Shadow>
+
+                <Grid>
+                    <Grid.Clip>
+                        <EllipseGeometry Center="40,40" RadiusX="40" RadiusY="40" />
+                    </Grid.Clip>
+
+                    <Image Source="{Binding FotoPerfil}" 
+                           Aspect="AspectFill"
+                           HorizontalOptions="Fill"
+                           VerticalOptions="Fill"/>
+                </Grid>
+            </Border>
+
+            <Label Text="Perfil"
+                   TextColor="White"
+                   FontSize="14"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding IrAPerfilCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
+
+        </VerticalStackLayout>
+
+
+        <VerticalStackLayout Grid.Row="1" 
+                             Spacing="20" 
+                             VerticalOptions="Start" 
+                             Margin="0,20,0,0">
+
             <Image Source="principal.png"
                    WidthRequest="280"
                    HeightRequest="280"
                    Aspect="AspectFit"
-                   Margin="0,0,0,10"/>
+                   HorizontalOptions="Center"/>
 
-            <!-- BOTONES GRANDES (Estilo Referencia) -->
+            <HorizontalStackLayout HorizontalOptions="Center" 
+                                   Spacing="10" 
+                                   Margin="0,-10,0,20">
+
+                <Label Text="{Binding NombreUsuario, StringFormat='¡BIENVENIDO, {0}!'}"
+                       TextColor="#FFD700"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       VerticalOptions="Center">
+                    <Label.Shadow>
+                        <Shadow Brush="Black" Offset="2,2" Opacity="0.5"/>
+                    </Label.Shadow>
+                </Label>
+
+                <Image Source="fiesta.png"
+                       HeightRequest="32"
+                       WidthRequest="32"
+                       VerticalOptions="Center"
+                       Aspect="AspectFit"/>
+
+            </HorizontalStackLayout>
+
             <VerticalStackLayout Spacing="25">
-
-                <!-- Botón Quiz (Verde) -->
                 <Button Text="Iniciar Quiz"
                         Command="{Binding IrAQuizCommand}"
                         BackgroundColor="#00C853"
@@ -39,7 +102,6 @@
                         FontAttributes="Bold"
                         Shadow="{Shadow Brush=Black, Offset='0,4', Opacity=0.3}"/>
 
-                <!-- Botón Flashcards (Rojo Coral) -->
                 <Button Text="Estudiar Flashcards"
                         Command="{Binding IrAFlashcardsCommand}"
                         BackgroundColor="#FF5252"
@@ -50,7 +112,6 @@
                         FontAttributes="Bold"
                         Shadow="{Shadow Brush=Black, Offset='0,4', Opacity=0.3}"/>
             </VerticalStackLayout>
-
         </VerticalStackLayout>
 
     </Grid>
