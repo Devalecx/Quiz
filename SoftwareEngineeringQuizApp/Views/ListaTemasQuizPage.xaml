@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SoftwareEngineeringQuizApp.ViewModels"
+             x:Class="SoftwareEngineeringQuizApp.Views.ListaTemasQuizPage"
+             Title="Selecciona un Tema"
+             BackgroundColor="#F5F5F7">
+    <!-- Color de fondo explícito para evitar pantalla negra -->
+
+    <Grid>
+        <!-- Indicador de Carga: Solo se ve si EstaCargando es True -->
+        <ActivityIndicator IsRunning="{Binding EstaCargando}" 
+                           IsVisible="{Binding EstaCargando}"
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center" 
+                           Color="#512BD4"
+                           ZIndex="2"/>
+        <!-- ZIndex alto para que flote encima -->
+
+        <!-- Lista de Temas -->
+        <!-- Quitamos el IsVisible complejo. Si la lista está vacía, simplemente no muestra nada. -->
+        <CollectionView ItemsSource="{Binding Temas}"
+                        SelectionMode="None"
+                        Margin="20">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,8" 
+                           Padding="20" 
+                           BackgroundColor="White" 
+                           CornerRadius="10" 
+                           HasShadow="True"
+                           BorderColor="Transparent">
+
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ListaTemasQuizViewModel}}, Path=SeleccionarTemaCommand}"
+                                                  CommandParameter="{Binding .}" />
+                        </Frame.GestureRecognizers>
+
+                        <HorizontalStackLayout Spacing="15">
+                            <!-- Decoración visual simple -->
+                            <BoxView WidthRequest="5" Color="#512BD4" VerticalOptions="Fill"/>
+
+                            <Label Text="{Binding .}" 
+                                   FontSize="18" 
+                                   TextColor="#333" 
+                                   VerticalOptions="Center"
+                                   FontAttributes="Bold"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Mensaje si no hay datos -->
+        <!-- Se puede agregar un Label que se muestre si la lista está vacía, pero por ahora simplifiquemos -->
+    </Grid>
+</ContentPage>

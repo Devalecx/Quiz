@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SoftwareEngineeringQuizApp.ViewModels"
+             x:Class="SoftwareEngineeringQuizApp.Views.MenuPrincipalPage"
+             Title="Menú Principal">
+
+    <ContentPage.BindingContext>
+        <!-- Inyección del ViewModel se resuelve automáticamente si se registra en MauiProgram -->
+        <vm:MenuPrincipalViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto, *, Auto" Padding="30" BackgroundColor="#F5F5F5">
+
+        <!-- Encabezado -->
+        <VerticalStackLayout Grid.Row="0" Spacing="10" Margin="0,50,0,0">
+            <Label Text="Software Engineering"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="#512BD4"/>
+            <Label Text="Quiz &amp; Flashcards"
+                   FontSize="18"
+                   HorizontalOptions="Center"
+                   TextColor="Gray"/>
+        </VerticalStackLayout>
+
+        <!-- Botones de Acción -->
+        <VerticalStackLayout Grid.Row="1" Spacing="25" VerticalOptions="Center">
+
+            <!-- Botón Quiz -->
+            <Button Text="Iniciar Quiz"
+                    Command="{Binding IrAQuizCommand}"
+                    BackgroundColor="#512BD4"
+                    TextColor="White"
+                    HeightRequest="60"
+                    CornerRadius="12"
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    Shadow="{Shadow Brush=Black, Offset='2,2', Opacity=0.2}"/>
+
+            <!-- Botón Flashcards -->
+            <Button Text="Estudiar Flashcards"
+                    Command="{Binding IrAFlashcardsCommand}"
+                    BackgroundColor="#17C3B2"
+                    TextColor="White"
+                    HeightRequest="60"
+                    CornerRadius="12"
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    Shadow="{Shadow Brush=Black, Offset='2,2', Opacity=0.2}"/>
+
+        </VerticalStackLayout>
+
+        <!-- Footer -->
+        <Label Grid.Row="2" 
+               Text="Versión 1.0 - Fase 2"
+               FontSize="12"
+               TextColor="Silver"
+               HorizontalOptions="Center"
+               Margin="0,0,0,20"/>
+    </Grid>
+</ContentPage>

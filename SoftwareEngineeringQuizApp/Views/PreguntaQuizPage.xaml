@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SoftwareEngineeringQuizApp.ViewModels"
+             x:Class="SoftwareEngineeringQuizApp.Views.PreguntaQuizPage"
+             Title="{Binding TemaActual}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20">
+
+            <!-- Progreso -->
+            <Label Text="{Binding TextoProgreso}" 
+                   HorizontalOptions="Center"
+                   TextColor="Gray"
+                   FontSize="14"/>
+
+            <!-- Tarjeta de Pregunta -->
+            <Frame BackgroundColor="White" 
+                   CornerRadius="15" 
+                   Padding="20" 
+                   HasShadow="True"
+                   BorderColor="#512BD4">
+                <Label Text="{Binding PreguntaActual.Pregunta}" 
+                       FontSize="20" 
+                       HorizontalTextAlignment="Center"
+                       TextColor="#333"
+                       FontAttributes="Bold"/>
+            </Frame>
+
+            <BoxView HeightRequest="1" Color="LightGray" Margin="0,10"/>
+
+            <!-- Lista Dinámica de Opciones -->
+            <StackLayout BindableLayout.ItemsSource="{Binding PreguntaActual.Opciones}"
+                         Spacing="15">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Button Text="{Binding .}"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PreguntaQuizViewModel}}, Path=ResponderCommand}"
+                                CommandParameter="{Binding .}"
+                                BackgroundColor="#512BD4"
+                                TextColor="White"
+                                CornerRadius="25"
+                                HeightRequest="60"
+                                FontSize="16"/>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
